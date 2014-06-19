@@ -1,0 +1,26 @@
+body{
+	background-image:url('/images/dark-dust.png');
+	background-repeat:repeat;
+}
+
+#container-main{
+background-image:url('/images/cream-dust.png');
+max-width:920px;
+margin-top:60px;
+}
+
+.highlight pre{
+background-color:transparent;
+}
+
+div .highlight{
+max-width:600px;
+border-radius:10px;
+}
+
+footer li{
+float:left;
+margin-right:
+1.5em;
+margin-bottom:1.5em;
+}
