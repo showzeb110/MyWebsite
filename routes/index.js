@@ -19,4 +19,8 @@ router.get('/resume', function(req, res) {
 	res.redirect('/resume.pdf');
 });
 
+router.get('/contact', function(req, res) {
+	res.render('contact');
+});
+
 module.exports = router;
