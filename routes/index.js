@@ -23,4 +23,12 @@ router.get('/contact', function(req, res) {
 	res.render('contact');
 });
 
+router.get('/articles', function(req, res) {
+	res.render('articles');
+});
+
+router.get('/articles/2014/new-site', function(req, res) {
+	res.render('articles/2014/new-site');
+});
+
 module.exports = router;
