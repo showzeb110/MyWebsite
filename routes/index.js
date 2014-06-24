@@ -27,6 +27,10 @@ router.get('/articles', function(req, res) {
 	res.render('articles');
 });
 
+router.get('/projects', function(req, res) {
+	res.render('projects');
+});
+
 router.get('/articles/2014/new-site', function(req, res) {
 	res.render('articles/2014/new-site');
 });
