@@ -1,0 +1,246 @@
+<div style="margin:20px">
+	This page is not yet complete.
+	<div id="content-header"><h1>Data Compression Using Huffman Encoding</h1></div>
+	<div id="post">
+		<p> As we'll see Huffman coding compresses data by using fewer bits to encode more 
+			frequently occurring characters so that not all characters are encoded with 7
+			bits. Substantial compression results regardless of the character-encoding used
+			by a language or platform.
+			The Huffman encoding algorithm is an optimal compression algorithm when only the frequency of individual 
+			letters are used to compress the data. (There are better algorithms that can use more structure of the 
+			file than just letter frequencies.) The idea behind the algorithm is that if you have some letters that 
+			are more frequent than others, it makes sense to use fewer bits to encode those letters than to 
+			encode the less frequent letters.</p>
+		<h2>A Simple Coding Example</h2>
+		<p> We'll look at how the string "go go gophers" is encoded in ASCII, how we might have save bits using a 
+			simpler coding scheme and how Huffman coding is used to compress the data resulting in still more savings.</p>
+		<p>With an ASCII encoding (7 bits per character, but stored in 8-bit bytes) the 13 character string 
+			"go go gophers" requires 104 bits. The table below shows how the coding works.</p>
+		<table class="table table-bordered table-curved center-table">
+			<tr>
+				<th>ASCII Coding</th>
+				<th>3-bit Coding</th>	
+			</tr>
+			<tr>
+				<td>
+					<table class="table table-bordered">
+						<tr>
+							<th>Char</th>
+							<th>ASCII #</th>
+							<th>Binary</th>
+						</tr>
+						<tr>
+							<td>g</td>
+							<td>103</td>
+							<td>1100111</td>
+						</tr>
+						<tr>
+							<td>o</td>
+							<td>111</td>
+							<td>1101111</td>
+						</tr>
+						<tr>
+							<td>p</td>
+							<td>112</td>
+							<td>1110000</td>
+						</tr>
+						<tr>
+							<td>h</td>
+							<td>104</td>
+							<td>1101000</td>
+						</tr>
+						<tr>
+							<td>e</td>
+							<td>101</td>
+							<td>1100101</td>
+						</tr>
+						<tr>
+							<td>r</td>
+							<td>114</td>
+							<td>1110010</td>
+						</tr>
+						<tr>
+							<td>s</td>
+							<td>115</td>
+							<td>1110011</td>
+						</tr>
+						<tr>
+							<td>space</td>
+							<td>115</td>
+							<td>1000000</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table class="table table-bordered">
+						<tr>
+							<th>Char</th>
+							<th>Code</th>
+							<th>Binary</th>
+						</tr>
+						<tr>
+							<td>g</td>
+							<td>0</td>
+							<td>000</td>
+						</tr>
+						<tr>
+							<td>o</td>
+							<td>1</td>
+							<td>001</td>
+						</tr>
+						<tr>
+							<td>p</td>
+							<td>2</td>
+							<td>010</td>
+						</tr>
+						<tr>
+							<td>h</td>
+							<td>3</td>
+							<td>011</td>
+						</tr>
+						<tr>
+							<td>e</td>
+							<td>4</td>
+							<td>100</td>
+						</tr>
+						<tr>
+							<td>r</td>
+							<td>5</td>
+							<td>101</td>
+						</tr>
+						<tr>
+							<td>s</td>
+							<td>6</td>
+							<td>110</td>
+						</tr>
+						<tr>
+							<td>space</td>
+							<td>7</td>
+							<td>111</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<p> The string "go go gophers" would be written (coded numerically) as 103 111 32 103 111
+		32 103 111 112 104 101 114 115. Although not easily readable by humans, this would be written
+		as the following stream of bits (without the spaces):</p>
+		<kbd>1100111 1101111 1000000 1100111 1101111 1000000 1100111 1101111 1110000 1101000
+		1100101 1110010 1110011</kbd>
+		<p/>
+		<p> Since there are only eight different characters in "go go gophers", it's possible to use
+		only 3 bits to encode the different characters. We might, for example, use the encoding
+		in the table on the right above, though other 3-bit encodings are possible.</p>
+		<p> Now the string "go go gophers" would be encoded as 0 1 7 0 1 7 0 1 2 3 4 5 6. Here is
+		how it is written as bits:</p>
+		<kbd>000 001 111 000 001 111 000 001 010 011 100 101 110</kbd>
+		<p/>
+		<p> By using three bits per character, the string "go go gophers" uses a total of 39 bits instead
+		of 104 bits, More bits can be saved if we use fewer than three bits to encode frequently-used
+		characters like g, o, and space, and more than three bits to encode characters like e, p, h, r, and
+		s that occur less frequently in "go go gophers". This is the basic idea behind Huffman coding: to use
+		fewer bits for more frequently occurring characters. We'll see how this is done using a tree that stores
+		characters at the leaves, and whose root--leaf paths provide the bit sequence used  to encode the characters.</p>
+		<h2>A Tree View of the ASCII Character Set</h2>
+		<div style="margin-top:10px;margin-left:20px;float:right;width:225px;">
+			<img src="/images/tree1.jpg" width="225" height="200" style="float:right"/>
+		</div>
+		<p>Using a binary tree, <strong>all characters are stored at the leaves.</strong> In the box to the right, the tree
+		has eight levels,so the path to the 'a' has seven edges. A left-edge (black in the diagram) is numbered 0, a
+		right-edge (blue in the diagram) is numbered 1. The ASCII code for any character is obtained by following the
+		root-to-leaf path and catenating the 0's and 1's. For example, the character 'a' which has ASCII value 97 (1100001
+		in binary), is shown with root-to-leaf path of <em>right-right-left-left-left-left-right</em>.</p>
+		<p>The structure of the tree can be used to determine the coding of any leaf by using the 0/1 edge convention described.
+		If we use a different tree, we get a different coding. As an example, the tree below yields the coding shown on the left</p>
+		<table class="table table-bordered">
+			<tr>
+				<td>
+					<table  class="table table-condensed">
+						<tr>
+							<th>Char</th>
+							<th>Binary #</th>
+						</tr>
+						<tr>
+							<td>g</td>
+							<td>10</td>
+						</tr>
+						<tr>
+							<td>o</td>
+							<td>11</td>
+						</tr>
+						<tr>
+							<td>p</td>
+							<td>0100</td>
+						</tr>
+						<tr>
+							<td>h</td>
+							<td>0101</td>
+						</tr>
+						<tr>
+							<td>e</td>
+							<td>0110</td>
+						</tr>
+						<tr>
+							<td>r</td>
+							<td>0111</td>
+						</tr>
+						<tr>
+							<td>s</td>
+							<td>000</td>
+						</tr>
+						<tr>
+							<td>' '</td>
+							<td>001</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<img src="/images/tree2.jpg" width="301" height="191"/>
+				</td>
+			</tr>
+		</table>
+		<p> Using this coding, "go go gophers" is encoded as:</p>
+		<kbd>10 11 001 10 11 001 10 11 0100 0101 0110 0111 000</kbd>
+		<p/>
+		<p>Again, the spaces wouldn't appear in the bitstream; they are shown for readability.
+		This is a total of 37 bits, which is even better than the encoding above where we used
+		a 3-bit-per-character-encoding! The bits are saved by coding frequently occurring characters
+		like 'g' and 'o' with fewer bits than characters that occur less frequently like 'p', 'h', 'e',
+		and 'r'.</p>
+		<p>The character encoding induced by the tree can be used to decode a stream of bits as
+		well as encode a string into a stream of bits. We can try to decode the following bitsream
+		that represents a different string composed of characters encoded in the tree above. The
+		answer and an explanation follow:</p>
+		<kbd>01010110011100010000100010101100111011000110110110000001010101101110110</kbd>
+		<p/>
+		<p>To decode the stream, start at the root of the encoding tree, and follow a left-branch
+		for a 0, and a right branch for 1. When you reach a leaf, write the character stored at
+		the leaf, and start again at the top of the tree. To start, the bits are 010101100111. This
+		yields <em>left-right-left-right</em> to the letter 'h', followed (starting again at the root) 
+		with <em>left-right-right-left</em> to the letter 'e', followed by <em>left-right=right-right</em>
+		to the letter 'r'. Continuing untill all the bits are processed yields</p>
+		<p class="text-center">her sphere goes here</p>
+		<h2>Prefix Codes and Huffman Codes</h2>
+		<p>When all characters are stores in leaves and every non-leaf node has two children, the
+		coding induced by the 0/1 convention outlined above has the <em>prefix property</em>: no
+		bit-sequence encoding of a character is the prefix of any other bit-sequence encoding. This
+		makes it possible to decode a bitstream using the coding tree by following root-to-leaf paths.
+		The tree shown above for "go go gophers" is an optimal: no other trees represent the same
+		characters and use fewer bits to encode the string "go go gophers". (There are other trees
+		that uses exactly 37 bits -- but not less then 37. For example we can simply swap any sibling
+		nodes and get a different encoding that uses the same number of bits.)</p>
+		<p> We need an algorithm for constructing an optimal tree that in turn yiels a minimal
+		per-character encoding. This algorithm is called Huffman coding, and was invented by D.Huffman
+		in 1952. It is an example of a greedy algorithm.</p>
+		<h2>Huffman Coding</h2>
+		<p>We'll use Huffman's algorithm to construct a tree that is used for data compression. In the 
+		previous section we saw examples of how a stream of bits can be generated from an encoding,
+		e.g. how "go go gophers" was written as 10110011011001101101000100101100111000. We also saw
+		how the tree can be used to decode a stream of bits. We'll discuss how to construct the tree
+		here</p>
+		<p>We'll assume that each character has an associated weight equal to the number of times the
+		character occurs in a file. In the "go go gophers" example, the characters 'g' and 'o' have
+		weight 3, the space has weight 2, and the other characters have weight 1.</p>
+	</div>
+	<hr>
+</div>
