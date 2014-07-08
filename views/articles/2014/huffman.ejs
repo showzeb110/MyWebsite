@@ -17,112 +17,114 @@
 			simpler coding scheme and how Huffman coding is used to compress the data resulting in still more savings.</p>
 		<p>With an ASCII encoding (7 bits per character, but stored in 8-bit bytes) the 13 character string 
 			"go go gophers" requires 104 bits. The table below shows how the coding works.</p>
-		<table class="table table-bordered table-curved center-table">
-			<tr>
-				<th>ASCII Coding</th>
-				<th>3-bit Coding</th>	
-			</tr>
-			<tr>
-				<td>
-					<table class="table table-bordered">
-						<tr>
-							<th>Char</th>
-							<th>ASCII #</th>
-							<th>Binary</th>
-						</tr>
-						<tr>
-							<td>g</td>
-							<td>103</td>
-							<td>1100111</td>
-						</tr>
-						<tr>
-							<td>o</td>
-							<td>111</td>
-							<td>1101111</td>
-						</tr>
-						<tr>
-							<td>p</td>
-							<td>112</td>
-							<td>1110000</td>
-						</tr>
-						<tr>
-							<td>h</td>
-							<td>104</td>
-							<td>1101000</td>
-						</tr>
-						<tr>
-							<td>e</td>
-							<td>101</td>
-							<td>1100101</td>
-						</tr>
-						<tr>
-							<td>r</td>
-							<td>114</td>
-							<td>1110010</td>
-						</tr>
-						<tr>
-							<td>s</td>
-							<td>115</td>
-							<td>1110011</td>
-						</tr>
-						<tr>
-							<td>space</td>
-							<td>115</td>
-							<td>1000000</td>
-						</tr>
-					</table>
-				</td>
-				<td>
-					<table class="table table-bordered">
-						<tr>
-							<th>Char</th>
-							<th>Code</th>
-							<th>Binary</th>
-						</tr>
-						<tr>
-							<td>g</td>
-							<td>0</td>
-							<td>000</td>
-						</tr>
-						<tr>
-							<td>o</td>
-							<td>1</td>
-							<td>001</td>
-						</tr>
-						<tr>
-							<td>p</td>
-							<td>2</td>
-							<td>010</td>
-						</tr>
-						<tr>
-							<td>h</td>
-							<td>3</td>
-							<td>011</td>
-						</tr>
-						<tr>
-							<td>e</td>
-							<td>4</td>
-							<td>100</td>
-						</tr>
-						<tr>
-							<td>r</td>
-							<td>5</td>
-							<td>101</td>
-						</tr>
-						<tr>
-							<td>s</td>
-							<td>6</td>
-							<td>110</td>
-						</tr>
-						<tr>
-							<td>space</td>
-							<td>7</td>
-							<td>111</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+		<div class="table-responsive">
+			<table class="table table-bordered table-curved center-table">
+				<tr>
+					<th>ASCII Coding</th>
+					<th>3-bit Coding</th>	
+				</tr>
+				<tr>
+					<td>
+						<table class="table table-bordered">
+							<tr>
+								<th>Char</th>
+								<th>ASCII #</th>
+								<th>Binary</th>
+							</tr>
+							<tr>
+								<td>g</td>
+								<td>103</td>
+								<td>1100111</td>
+							</tr>
+							<tr>
+								<td>o</td>
+								<td>111</td>
+								<td>1101111</td>
+							</tr>
+							<tr>
+								<td>p</td>
+								<td>112</td>
+								<td>1110000</td>
+							</tr>
+							<tr>
+								<td>h</td>
+								<td>104</td>
+								<td>1101000</td>
+							</tr>
+							<tr>
+								<td>e</td>
+								<td>101</td>
+								<td>1100101</td>
+							</tr>
+							<tr>
+								<td>r</td>
+								<td>114</td>
+								<td>1110010</td>
+							</tr>
+							<tr>
+								<td>s</td>
+								<td>115</td>
+								<td>1110011</td>
+							</tr>
+							<tr>
+								<td>space</td>
+								<td>115</td>
+								<td>1000000</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table class="table table-bordered">
+							<tr>
+								<th>Char</th>
+								<th>Code</th>
+								<th>Binary</th>
+							</tr>
+							<tr>
+								<td>g</td>
+								<td>0</td>
+								<td>000</td>
+							</tr>
+							<tr>
+								<td>o</td>
+								<td>1</td>
+								<td>001</td>
+							</tr>
+							<tr>
+								<td>p</td>
+								<td>2</td>
+								<td>010</td>
+							</tr>
+							<tr>
+								<td>h</td>
+								<td>3</td>
+								<td>011</td>
+							</tr>
+							<tr>
+								<td>e</td>
+								<td>4</td>
+								<td>100</td>
+							</tr>
+							<tr>
+								<td>r</td>
+								<td>5</td>
+								<td>101</td>
+							</tr>
+							<tr>
+								<td>s</td>
+								<td>6</td>
+								<td>110</td>
+							</tr>
+							<tr>
+								<td>space</td>
+								<td>7</td>
+								<td>111</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<p> The string "go go gophers" would be written (coded numerically) as 103 111 32 103 111
 		32 103 111 112 104 101 114 115. Although not easily readable by humans, this would be written
 		as the following stream of bits (without the spaces):</p>
@@ -153,53 +155,55 @@
 		in binary), is shown with root-to-leaf path of <em>right-right-left-left-left-left-right</em>.</p>
 		<p>The structure of the tree can be used to determine the coding of any leaf by using the 0/1 edge convention described.
 		If we use a different tree, we get a different coding. As an example, the tree below yields the coding shown on the left</p>
-		<table class="table table-bordered">
-			<tr>
-				<td>
-					<table  class="table table-condensed">
-						<tr>
-							<th>Char</th>
-							<th>Binary #</th>
-						</tr>
-						<tr>
-							<td>g</td>
-							<td>10</td>
-						</tr>
-						<tr>
-							<td>o</td>
-							<td>11</td>
-						</tr>
-						<tr>
-							<td>p</td>
-							<td>0100</td>
-						</tr>
-						<tr>
-							<td>h</td>
-							<td>0101</td>
-						</tr>
-						<tr>
-							<td>e</td>
-							<td>0110</td>
-						</tr>
-						<tr>
-							<td>r</td>
-							<td>0111</td>
-						</tr>
-						<tr>
-							<td>s</td>
-							<td>000</td>
-						</tr>
-						<tr>
-							<td>' '</td>
-							<td>001</td>
-						</tr>
-					</table>
-				</td>
-				<td>
-					<img src="/images/tree2.JPG" width="301" height="191"/>
-				</td>
-			</tr>
-		</table>
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<tr>
+					<td>
+						<table  class="table table-condensed">
+							<tr>
+								<th>Char</th>
+								<th>Binary #</th>
+							</tr>
+							<tr>
+								<td>g</td>
+								<td>10</td>
+							</tr>
+							<tr>
+								<td>o</td>
+								<td>11</td>
+							</tr>
+							<tr>
+								<td>p</td>
+								<td>0100</td>
+							</tr>
+							<tr>
+								<td>h</td>
+								<td>0101</td>
+							</tr>
+							<tr>
+								<td>e</td>
+								<td>0110</td>
+							</tr>
+							<tr>
+								<td>r</td>
+								<td>0111</td>
+							</tr>
+							<tr>
+								<td>s</td>
+								<td>000</td>
+							</tr>
+							<tr>
+								<td>' '</td>
+								<td>001</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<img src="/images/tree2.JPG" width="301" height="191"/>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<p> Using this coding, "go go gophers" is encoded as:</p>
 		<kbd>10 11 001 10 11 001 10 11 0100 0101 0110 0111 000</kbd>
 		<p/>
@@ -212,7 +216,9 @@
 		well as encode a string into a stream of bits. We can try to decode the following bitsream
 		that represents a different string composed of characters encoded in the tree above. The
 		answer and an explanation follow:</p>
-		<kbd>01010110011100010000100010101100111011000110110110000001010101101110110</kbd>
+		<div class="table-responsive">
+			<kbd>01010110011100010000100010101100111011000110110110000001010101101110110</kbd>
+		</div>
 		<p/>
 		<p>To decode the stream, start at the root of the encoding tree, and follow a left-branch
 		for a 0, and a right branch for 1. When we reach a leaf, write the character stored at
